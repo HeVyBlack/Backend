@@ -11,6 +11,5 @@ export abstract class Mongo<T extends Document> {
 
   constructor(nombre: string) {
     this.collección = this.base_datos.collection(nombre);
-    this.collección.aggregate();
   }
 }
