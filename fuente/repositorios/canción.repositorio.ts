@@ -23,6 +23,10 @@ export class CanciónRepositorio extends Mongo<CanciónEntidad> {
     super('Canciones');
   }
 
+  public obtenerMapeador() {
+    return this.canción_mapeador;
+  }
+
   async insertarCanción(dto: CanciónDTO): P<void> {
     const entidad = this.canción_mapeador.crearEntidadDesdeDTO(dto);
     await this.collección.insertOne(entidad);

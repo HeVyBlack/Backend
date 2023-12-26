@@ -15,12 +15,16 @@ export class ArtistaRepositorio extends Mongo<ArtistaEntidad> {
     return actualizar;
   }
 
-  constructor(private readonly artista_utilidad: Mapeador<ArtistaEntidad, ArtistaDTA, ArtistaDTO>) {
+  constructor(private readonly artista_mapeador: Mapeador<ArtistaEntidad, ArtistaDTA, ArtistaDTO>) {
     super('Artistas');
   }
 
+  public obtenerMapeador() {
+    return this.artista_mapeador;
+  }
+
   async insertarArtista(dto: ArtistaDTO): P<void> {
-    const entidad = this.artista_utilidad.crearEntidadDesdeDTO(dto);
+    const entidad = this.artista_mapeador.crearEntidadDesdeDTO(dto);
     await this.collección.insertOne(entidad);
   }
 
@@ -31,7 +35,7 @@ export class ArtistaRepositorio extends Mongo<ArtistaEntidad> {
       const álbum = await cursor.next();
       if (álbum == null) continue;
 
-      artistas_dto.push(this.artista_utilidad.crearDTADesdeEntidad(álbum));
+      artistas_dto.push(this.artista_mapeador.crearDTADesdeEntidad(álbum));
     }
 
     return artistas_dto;

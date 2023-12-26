@@ -13,7 +13,7 @@ export class MóduloArtista extends Módulo {
   readonly prefijo: string = '/artista';
 
   readonly complemento: (app: AplicaciónInstancia) => P<AplicaciónInstancia> = async (app) => {
-    const servicio = new ServicioArtista(this.repositorio);
+    const servicio = new ServicioArtista(this.repositorio, this.repositorio.obtenerMapeador());
     const controlador = new ControladorArtista(servicio);
     const rutas = new RutasArtista(controlador);
 

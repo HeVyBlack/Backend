@@ -16,12 +16,16 @@ export class ÁlbumRepositorio extends Mongo<ÁlbumEntidad> {
     return actualizar;
   }
 
-  constructor(private readonly álbum_utilidad: Mapeador<ÁlbumEntidad, ÁlbumDTA, ÁlbumDTO>) {
+  constructor(private readonly álbum_mapeador: Mapeador<ÁlbumEntidad, ÁlbumDTA, ÁlbumDTO>) {
     super('Álbumes');
   }
 
+  public obtenerMapeador() {
+    return this.álbum_mapeador;
+  }
+
   async insertarÁlbum(dto: ÁlbumDTO): P<void> {
-    const entidad = this.álbum_utilidad.crearEntidadDesdeDTO(dto);
+    const entidad = this.álbum_mapeador.crearEntidadDesdeDTO(dto);
     await this.collección.insertOne(entidad);
   }
 
@@ -32,7 +36,7 @@ export class ÁlbumRepositorio extends Mongo<ÁlbumEntidad> {
       const álbum = await cursor.next();
       if (álbum == null) continue;
 
-      álbumes_dto.push(this.álbum_utilidad.crearDTADesdeEntidad(álbum));
+      álbumes_dto.push(this.álbum_mapeador.crearDTADesdeEntidad(álbum));
     }
 
     return álbumes_dto;

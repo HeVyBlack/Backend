@@ -15,7 +15,7 @@ export class MóduloÁlbum extends Módulo {
   override readonly complemento: (app: AplicaciónInstancia) => P<AplicaciónInstancia> = async (
     app
   ) => {
-    const servicio = new ServicioÁlbum(this.repositorio);
+    const servicio = new ServicioÁlbum(this.repositorio, this.repositorio.obtenerMapeador());
     const controlador = new ControladorÁlbum(servicio);
 
     const rutas = new RutasÁlbum(controlador);
