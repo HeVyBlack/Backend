@@ -1,8 +1,8 @@
 export class CanciónEntidad {
   constructor(
-    readonly Nombre: string,
-    readonly Duración: number,
-    readonly NombreBanda: string,
-    readonly NombreÁlbum: string
+    public Nombre: string,
+    public Duración: number,
+    public NombreBanda: string,
+    public NombreÁlbum: string
   ) {}
 }

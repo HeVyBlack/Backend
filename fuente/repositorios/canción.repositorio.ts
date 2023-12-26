@@ -6,15 +6,15 @@ import { CanciónDTO } from '@Dto/canción.dto.ts';
 import { Mapeador } from '../utilidades/mapeador.ts';
 
 export class CanciónRepositorio extends Mongo<CanciónEntidad> {
-  private crearActualizarFiltro(dto: CanciónDTO): Filter<CanciónEntidad> {
-    const actualizar: UpdateFilter<CanciónEntidad> = {};
+  private crearActualizarFiltro(dto: CanciónDTO): UpdateFilter<CanciónEntidad> {
+    const actualizar: Partial<CanciónEntidad> = {};
 
-    if (dto.nombre) actualizar['Nombre'] = { $set: dto.nombre };
-    if (dto.duración) actualizar['Duración'] = { $set: dto.duración };
-    if (dto.nombre_banda) actualizar['NombreBanda'] = { $set: dto.nombre_banda };
-    if (dto.nombre_álbum) actualizar['NombreÁlbum'] = { $set: dto.nombre_álbum };
+    if (dto.nombre) actualizar.Nombre = dto.nombre;
+    if (dto.duración) actualizar.Duración = dto.duración;
+    if (dto.nombre_banda) actualizar.NombreBanda = dto.nombre_banda;
+    if (dto.nombre_álbum) actualizar.NombreÁlbum = dto.nombre_álbum;
 
-    return actualizar;
+    return { $set: actualizar };
   }
 
   public constructor(

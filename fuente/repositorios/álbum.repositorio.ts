@@ -6,14 +6,14 @@ import { ÁlbumDTA } from '@Dta/álbum.dta.ts';
 import { Mapeador } from '../utilidades/mapeador.ts';
 
 export class ÁlbumRepositorio extends Mongo<ÁlbumEntidad> {
-  private crearActualizarFiltro(dto: ÁlbumDTO): Filter<ÁlbumEntidad> {
-    const actualizar: UpdateFilter<ÁlbumEntidad> = {};
+  private crearActualizarFiltro(dto: ÁlbumDTO): UpdateFilter<ÁlbumEntidad> {
+    const actualizar: Partial<ÁlbumEntidad> = {};
 
-    if (dto.nombre) actualizar['Nombre'] = { $set: dto.nombre };
-    if (dto.nombre_banda) actualizar['NombreBanda'] = { $set: dto.nombre_banda };
-    if (dto.año_lanzamiento) actualizar['AñoLanzamiento'] = { $set: dto.año_lanzamiento };
+    if (dto.nombre) actualizar.Nombre = dto.nombre;
+    if (dto.nombre_banda) actualizar.NombreBanda = dto.nombre_banda;
+    if (dto.año_lanzamiento) actualizar.AñoLanzamiento = dto.año_lanzamiento;
 
-    return actualizar;
+    return { $set: actualizar };
   }
 
   constructor(private readonly álbum_mapeador: Mapeador<ÁlbumEntidad, ÁlbumDTA, ÁlbumDTO>) {

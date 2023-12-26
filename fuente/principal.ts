@@ -17,8 +17,6 @@ async function principal() {
   await app.register(modulo_música.complemento, { prefix: modulo_música.prefijo });
 
   await app.listen({ port: 3000 });
-
-  console.log(app.printRoutes());
 }
 
 await principal();

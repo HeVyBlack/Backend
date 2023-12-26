@@ -6,11 +6,11 @@ import { ArtistaDTA } from '../dta/artista.dta.ts';
 import { Mapeador } from '../utilidades/mapeador.ts';
 
 export class ArtistaRepositorio extends Mongo<ArtistaEntidad> {
-  private crearActualizarFiltro(dto: ArtistaDTO): Filter<ArtistaEntidad> {
-    const actualizar: UpdateFilter<ArtistaEntidad> = {};
+  private crearActualizarFiltro(dto: ArtistaDTO): UpdateFilter<ArtistaEntidad> {
+    const actualizar: Partial<ArtistaEntidad> = {};
 
-    if (dto.nombre) actualizar['Nombre'] = { $set: dto.nombre };
-    if (dto.año_fundación) actualizar['NombreBanda'] = { $set: dto.año_fundación };
+    if (dto.nombre) actualizar.Nombre = dto.nombre;
+    if (dto.año_fundación) actualizar.AñoFormación = dto.año_fundación;
 
     return actualizar;
   }
